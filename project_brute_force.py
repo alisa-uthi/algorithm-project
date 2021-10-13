@@ -13,6 +13,10 @@ class Project:
 
 
 def find_project_schedule(projects, n):
+    # Sort projects based on the daeadline and number of students required in the project
+    projects = sorted(projects, key=lambda project: (
+        project.deadline, -len(project.members)))
+
     # To store result (Sequence of project number)
     # Default value is 0, meaning that the student is busy on that day
     result = [0] * n
@@ -106,10 +110,6 @@ if __name__ == "__main__":
     #         4
     #     ),
     # ]
-
-    # Sort projects based on number of students required in the project in descending order
-    projects = sorted(projects, key=lambda project: (
-        project.deadline, -len(project.members)))
 
     print(f'The schedule is {find_project_schedule(projects, n)}')
     print("Runtime is O(n * m * k).... T^T")
