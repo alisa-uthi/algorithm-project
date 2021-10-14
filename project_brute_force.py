@@ -30,15 +30,12 @@ def find_project_schedule(projects, n):
 
             # Get time slot of all students in a particular day
             # To determine if all students are available to do the project
-            all_members_available = True
-            for student_index in range(0, len(students)):
-                if(not students[student_index].time_slot[day]):
-                    all_members_available = False
-                    break
+            all_members_busy = any(
+                student for student in students if student.time_slot[day] == 0)
 
             # If they are all available and the current date is not the project's deadline and the project has not yet finished,
             # Add the project number to the result and decrease day to complete the project by 1
-            if(all_members_available and day <= projects[project_index].deadline and projects[project_index].day_to_complete != 0):
+            if(not all_members_busy and day <= projects[project_index].deadline and projects[project_index].day_to_complete != 0):
                 result[day] = projects[project_index].project_number
                 projects[project_index].day_to_complete -= 1
                 break
@@ -48,6 +45,8 @@ def find_project_schedule(projects, n):
 
 if __name__ == "__main__":
     n = 7
+
+    # [2, 1, 3, 3, 0, 1, 0]
     projects = [
         Project(
             1,
@@ -79,6 +78,7 @@ if __name__ == "__main__":
         ),
     ]
 
+    # [3, 2, 3, 1, 0, 0, 1]
     # projects = [
     #     Project(
     #         1,
@@ -112,4 +112,4 @@ if __name__ == "__main__":
     # ]
 
     print(f'The schedule is {find_project_schedule(projects, n)}')
-    print("Runtime is O(n * m * k).... T^T")
+    print("Runtime is O(n * m).... T^T")
