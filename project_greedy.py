@@ -15,7 +15,7 @@ class Project:
 def find_project_schedule(projects, n):
     # Sort projects based on the daeadline and number of students required in the project
     projects = sorted(projects, key=lambda project: (
-        project.deadline, -len(project.members)))
+        project.deadline, -len(project.members), (project.day_to_complete)))
 
     # To store result (Sequence of project number)
     # Default value is 0, meaning that the student is busy on that day
@@ -30,12 +30,12 @@ def find_project_schedule(projects, n):
 
             # Get time slot of all students in a particular day
             # To determine if all students are available to do the project
-            all_members_busy = any(
+            some_members_busy = any(
                 student for student in students if student.time_slot[day] == 0)
 
             # If they are all available and the current date is not the project's deadline and the project has not yet finished,
             # Add the project number to the result and decrease day to complete the project by 1
-            if(not all_members_busy and day <= projects[project_index].deadline and projects[project_index].day_to_complete != 0):
+            if(not some_members_busy and day <= projects[project_index].deadline and projects[project_index].day_to_complete != 0):
                 result[day] = projects[project_index].project_number
                 projects[project_index].day_to_complete -= 1
                 break
@@ -111,5 +111,36 @@ if __name__ == "__main__":
     #     ),
     # ]
 
+    # [1, 1, 2, 3, 0, 0, 3]
+    # projects = [
+    #     Project(
+    #         1,
+    #         [
+    #             Student('A', [1, 1, 1, 1, 0, 1, 1]),
+    #             Student('B', [1, 1, 1, 1, 0, 1, 1]),
+    #         ],
+    #         2,
+    #         4
+    #     ),
+    #     Project(
+    #         2,
+    #         [
+    #             Student('A', [1, 1, 1, 1, 0, 1, 1]),
+    #             Student('B', [1, 1, 1, 1, 0, 1, 1]),
+    #         ],
+    #         1,
+    #         5
+    #     ),
+    #     Project(
+    #         3,
+    #         [
+    #             Student('A', [1, 1, 1, 1, 0, 1, 1]),
+    #             Student('B', [1, 1, 1, 1, 0, 1, 1]),
+    #             Student('C', [1, 0, 1, 1, 0, 0, 1]),
+    #         ],
+    #         3,
+    #         7
+    #     ),
+    # ]
+
     print(f'The schedule is {find_project_schedule(projects, n)}')
-    print("Runtime is O(n * m).... T^T")
