@@ -15,11 +15,15 @@ class Project:
 def find_project_schedule(projects, n):
     # Sort projects based on the daeadline and number of students required in the project
     projects = sorted(projects, key=lambda project: (
-        project.deadline, -len(project.members), (project.day_to_complete)))
+        project.deadline, -len(project.members), project.day_to_complete, ))
 
     # To store result (Sequence of project number)
     # Default value is 0, meaning that the student is busy on that day
     result = [0] * n
+
+    # If there is no project, return the result
+    if len(projects) == 0:
+        return result
 
     # Iterate through all given number of days
     for day in range(0, n):
@@ -139,6 +143,52 @@ if __name__ == "__main__":
     #             Student('C', [1, 0, 1, 1, 0, 0, 1]),
     #         ],
     #         3,
+    #         7
+    #     ),
+    # ]
+
+    # [0, 1, 1, 0, 0, 0, 0]
+    # projects = [
+    #     Project(
+    #         1,
+    #         [
+    #             Student('A', [1, 1, 1, 1, 0, 1, 1]),
+    #             Student('B', [0, 1, 1, 1, 0, 1, 1]),
+    #         ],
+    #         2,
+    #         6
+    #     ),
+    # ]
+
+    # [0, 1, 1, 2, 1, 3, 3]
+    # The schedule is [0, 2, 1, 0, 1, 1, 3]
+    # projects = [
+    #     Project(
+    #         1,
+    #         [
+    #             Student('A', [0, 1, 1, 0, 1, 1, 1]),
+    #         ],
+    #         3,
+    #         6
+    #     ),
+    #     Project(
+    #         2,
+    #         [
+    #             Student('C', [1, 1, 0, 1, 0, 1, 1]),
+    #             Student('D', [0, 1, 0, 1, 0, 1, 1]),
+    #         ],
+    #         1,
+    #         5
+    #     ),
+    #     Project(
+    #         3,
+    #         [
+    #             Student('A', [0, 1, 1, 0, 1, 1, 1]),
+    #             Student('B', [1, 0, 1, 0, 0, 1, 1]),
+    #             Student('C', [1, 1, 0, 1, 0, 1, 1]),
+    #             Student('D', [0, 1, 0, 1, 0, 1, 1]),
+    #         ],
+    #         2,
     #         7
     #     ),
     # ]
