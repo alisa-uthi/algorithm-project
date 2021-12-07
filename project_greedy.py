@@ -210,7 +210,7 @@ if __name__ == "__main__":
     #     ),
     # ]
 
-    # [3, 2, 3, 3, 0, 0, 1] --> [1, 2, 1, 0, 0, 0, 0]: the students need 5 days to complete project 1 but only have 3 days
+    # [1, 0, 1, 2, 0, 0, 0] --> [1, 0, 1, 2, 0, 0, 0]: the students need 5 days to complete project 1 but only have 3 days
     # and need 2 days to complete project 1 but only have 1 day. Skipping project 3 gives the optimal solution.
     projects = [
         Project(
@@ -226,7 +226,7 @@ if __name__ == "__main__":
         Project(
             2,
             [
-                Student('C', [1, 1, 0, 1, 0, 1, 1]),
+                Student('C', [1, 0, 1, 1, 0, 0, 1]),
                 Student('D', [0, 1, 0, 1, 0, 1, 1]),
             ],
             1,
